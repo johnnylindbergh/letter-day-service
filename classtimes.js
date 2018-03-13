@@ -1,5 +1,8 @@
 
 
 module.exports = {
+	test: function() {
+		
+	}
 	
 }
