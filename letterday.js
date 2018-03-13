@@ -5,8 +5,6 @@ var cal		= require('ical');
 module.exports = {
 	// make api call and update last modified date
 	updateLetterDay: function(callback) {
-		global.lastUpdate = moment();	// update last update
-		global.currentLetterDay = undefined;
 
 		cal.fromURL(private.lindbergh_school_events,{}, function(err,data) {
 			if (err) throw err;

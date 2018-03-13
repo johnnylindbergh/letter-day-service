@@ -20,23 +20,35 @@ global.lastUpdate;
 global.currentLetterDay;
 global.rotation;
 
+
 app.get('/', function(req, res) {
 	var today = moment();
+	// if info has not been established on this day, find all
 	if (!today.isSame(lastUpdate, 'day')) {
-		letterDay.updateLetterDay(function() {
+		establishAllInfo(function() {
 			res.send(currentLetterDay);
 		});
 	} else {
 		res.send(currentLetterDay);
 	}
-
 });
 
 var server = app.listen(8080, function() {
     console.log('Letter day server listening on port %s', server.address().port);
 
-    lastUpdate = moment();	// init last update & letter day
-    letterDay.updateLetterDay(function() {
-    	console.log("Initialized letter day.");
+    establishAllInfo(function() {
+    	console.log("Finished initial establishment on server start");
     });
 });
+
+function establishAllInfo(callback) {
+	global.lastUpdate = moment();	// update last update
+	global.currentLetterDay = undefined;
+	global.rotation = undefined;
+
+	letterDay.updateLetterDay(function() {
+		classTimes.getTodaysSchedule(function() {
+			console.log("All info established");
+		});
+	});
+}
