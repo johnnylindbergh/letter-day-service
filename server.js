@@ -14,7 +14,6 @@ app.use('/', express.static('static'));
 var lastUpdate;
 var currentLetterDay;
 
-var url = private.ical_url;
 
 //debug
 updateLetterDay(function() {
@@ -30,8 +29,9 @@ updateLetterDay(function() {
 // make api call and update last modified date
 function updateLetterDay(callback) {
 	lastUpdate = moment();	// update last update
+	currentLetterDay = undefined;
 
-	cal.fromURL(url,{}, function(err,data) {
+	cal.fromURL(private.lindbergh_school_events,{}, function(err,data) {
 		if (err) throw err;
 
 		for (var k in data){
