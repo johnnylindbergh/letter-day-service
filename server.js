@@ -14,7 +14,6 @@ app.use('/', express.static('static'));
 var lastUpdate;
 var currentLetterDay;
 
-
 //debug
 updateLetterDay(function() {
 	console.log("Finished,.");
