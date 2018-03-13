@@ -16,8 +16,9 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.engine('html', mustacheExpress());
 app.use('/', express.static('static'));
 
-var lastUpdate;
-var currentLetterDay;
+global.lastUpdate;
+global.currentLetterDay;
+global.rotation;
 
 app.get('/', function(req, res) {
 	var today = moment();
@@ -30,7 +31,6 @@ app.get('/', function(req, res) {
 	}
 
 });
-
 
 var server = app.listen(8080, function() {
     console.log('Letter day server listening on port %s', server.address().port);

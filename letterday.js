@@ -1,11 +1,12 @@
-var moment = require('moment.js');
-var private = require('private.js');
+var moment = require('moment');
+var private = require('./private.js');
+var cal		= require('ical');
 
 module.exports = {
 	// make api call and update last modified date
 	updateLetterDay: function(callback) {
-		lastUpdate = moment();	// update last update
-		currentLetterDay = undefined;
+		global.lastUpdate = moment();	// update last update
+		global.currentLetterDay = undefined;
 
 		cal.fromURL(private.lindbergh_school_events,{}, function(err,data) {
 			if (err) throw err;
@@ -17,8 +18,10 @@ module.exports = {
 					if (summary.match(/(D|d)ay\s\w\s\(US\)/g)) {
 						var event_date = moment(ev.start);
 
-						if (event_date.isSame(lastUpdate, 'day')) {
-							currentLetterDay = summary.split(' ')[1];
+						if (event_date.isSame(global.lastUpdate, 'day')) {
+							var data = summary.split(' ');
+							global.currentLetterDay = data[1];
+							global.rotation = data[3];
 							break;
 						}
 					}
