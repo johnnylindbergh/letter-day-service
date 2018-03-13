@@ -34,8 +34,7 @@ var server = app.listen(8080, function() {
 
     establishAllInfo(function() {
     	console.log("Finished initial establishment on server start");
-
-    	console.log(global.rotation);
+    	console.log(classTimes.getCurrentPeriodInfo());
     });
 });
 
