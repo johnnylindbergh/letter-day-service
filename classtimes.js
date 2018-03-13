@@ -1,4 +1,4 @@
-var moment = require('moment');
+var moment 	= require('moment');
 var private = require('./private.js');
 var cal		= require('ical');
 
@@ -41,7 +41,7 @@ module.exports = {
 			} else if (currentTime.isBefore(period.start)) {
 				// calculate time until next period
 				var difference = moment.utc(period.start.diff(currentTime)).format("HH:mm:ss");
-				return {during: false, time_until: difference};
+				return {during: false, time_until: difference, period: period.period};
 			}
 		}
 

@@ -1,4 +1,4 @@
-var moment = require('moment');
+var moment 	= require('moment');
 var private = require('./private.js');
 var cal		= require('ical');
 

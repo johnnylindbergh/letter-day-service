@@ -33,7 +33,7 @@ var server = app.listen(8080, function() {
     console.log('Letter day server listening on port %s', server.address().port);
 
     establishAllInfo(function() {
-    	console.log("Finished initial establishment on server start");
+    	console.log("Finished initial establishment on server start.");
     	console.log(classTimes.getCurrentPeriodInfo());
     });
 });
