@@ -7,6 +7,8 @@ module.exports = {
 		cal.fromURL(private.lindbergh_classes,{}, function(err,data) {
 			if (err) throw err;
 
+			var index = 0;
+
 			for (var k in data){
 				if (data.hasOwnProperty(k)) {
 					var ev = data[k]
@@ -15,12 +17,27 @@ module.exports = {
 
 					// if class occurs today and is not advisory
 					if (start.isSame(global.lastUpdate, 'day') && !ev.summary.match('Advisory')) {
-						global.class_times.push({start: start, end: end});
+						global.rotation[index].start = start;
+						global.rotation[index].end = end;
+						index++;
+
+						// global.class_times.push({start: start, end: end});
 					}
 				}
 			}
 
 			callback();
 		});
+	},
+
+	getCurrentPeriodInfo: function() {
+		var currentTime = moment();
+		var info = {};
+		for (var i = 0; i < global.rotation.length; i++) {
+			var period = global.rotation[i];
+			if (currentTime.isBetween(period.start, period.end) || currentTime.isSame(period.start) || currentTime.isSame(period.end)) {
+				
+			}
+		}
 	}
 }

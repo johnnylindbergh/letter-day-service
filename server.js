@@ -35,7 +35,7 @@ var server = app.listen(8080, function() {
     establishAllInfo(function() {
     	console.log("Finished initial establishment on server start");
 
-    	console.log(global.class_times);
+    	console.log(global.rotation);
     });
 });
 
@@ -43,8 +43,7 @@ function establishAllInfo(callback) {
 	// record that update has been made and reset all info
 	global.lastUpdate = moment();
 	global.currentLetterDay = undefined;
-	global.rotation = undefined;
-	global.class_times = [];
+	global.rotation = [];
 
 	letterDay.updateLetterDay(function() {
 		classTimes.getTodaysSchedule(function() {

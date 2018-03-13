@@ -19,7 +19,11 @@ module.exports = {
 						if (event_date.isSame(global.lastUpdate, 'day')) {
 							var data = summary.split(' ');
 							global.currentLetterDay = data[1];
-							global.rotation = data[3];
+							var rot = data[3].split('-');
+
+							for (var i = 0; i < rot.length; i++) {
+								global.rotation.push({period: rot[i]});
+							}
 							break;
 						}
 					}
