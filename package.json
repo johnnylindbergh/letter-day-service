@@ -1,0 +1,24 @@
+{
+  "name": "letter-day-service",
+  "version": "1.0.0",
+  "description": "It does what it does.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/johnnylindbergh/letter-day-service.git"
+  },
+  "keywords": [
+    "letters",
+    "days"
+  ],
+  "author": "Thomas Castleman and Johnny Lindbergh",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/johnnylindbergh/letter-day-service/issues"
+  },
+  "homepage": "https://github.com/johnnylindbergh/letter-day-service#readme"
+}
