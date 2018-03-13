@@ -4,6 +4,7 @@ var mustacheExpress = require('mustache-express');
 var bodyParser      = require('body-parser');
 var moment			= require('moment');
 var cal 			= require('ical');
+var private			= require('private.js');
 
 var app = express();
 app.use(bodyParser.urlencoded({extended: false}));
@@ -13,7 +14,7 @@ app.use('/', express.static('static'));
 var lastUpdate;
 var currentLetterDay;
 
-var url = ['https://api.veracross.com/stab/subscribe/14F14099-B662-439F-BBCE-9CF991E8DA96.ics'];
+var url = private.ical_url;
 
 //debug
 updateLetterDay(function() {
@@ -30,7 +31,7 @@ updateLetterDay(function() {
 function updateLetterDay(callback) {
 	lastUpdate = moment();	// update last update
 
-	cal.fromURL(url[0],{}, function(err,data) {
+	cal.fromURL(url,{}, function(err,data) {
 		if (err) throw err;
 
 		for (var k in data){
