@@ -61,11 +61,11 @@ app.get('/', function(req, res) {
 	} else {
 		res.send(currentLetterDay);
 	}
+
 });
 
 
 var server = app.listen(8080, function() {
     console.log('Letter day server listening on port %s', server.address().port);
-    lastUpdate = moment('2018-03-13');
-
+    lastUpdate = moment();
 });
