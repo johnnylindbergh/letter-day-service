@@ -13,9 +13,10 @@ module.exports = {
 					var start = moment(ev.start);
 					var end = moment(ev.end);
 
-					console.log(start);
-					console.log(end);
-
+					// if class occurs today and is not advisory
+					if (start.isSame(global.lastUpdate, 'day') && !ev.summary.match('Advisory')) {
+						global.class_times.push({start: start, end: end});
+					}
 				}
 			}
 

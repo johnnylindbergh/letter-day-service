@@ -16,11 +16,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.engine('html', mustacheExpress());
 app.use('/', express.static('static'));
 
-global.lastUpdate;
-global.currentLetterDay;
-global.rotation;
-
-
+// get homepage
 app.get('/', function(req, res) {
 	var today = moment();
 	// if info has not been established on this day, find all
@@ -38,17 +34,21 @@ var server = app.listen(8080, function() {
 
     establishAllInfo(function() {
     	console.log("Finished initial establishment on server start");
+
+    	console.log(global.class_times);
     });
 });
 
 function establishAllInfo(callback) {
-	global.lastUpdate = moment();	// update last update
+	// record that update has been made and reset all info
+	global.lastUpdate = moment();
 	global.currentLetterDay = undefined;
 	global.rotation = undefined;
+	global.class_times = [];
 
 	letterDay.updateLetterDay(function() {
 		classTimes.getTodaysSchedule(function() {
-			console.log("All info established");
+			callback();
 		});
 	});
 }
