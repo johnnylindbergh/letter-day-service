@@ -14,7 +14,7 @@ var classTimes		= require('./classtimes.js');
 var app = express();
 app.use(bodyParser.urlencoded({extended: false}));
 app.engine('html', mustacheExpress());
-app.use('/', express.static('static'));
+app.use('/', express.static('views'));
 
 // get homepage
 app.get('/', function(req, res) {
@@ -22,12 +22,22 @@ app.get('/', function(req, res) {
 	// if info has not been established on this day, find all
 	if (!today.isSame(lastUpdate, 'day')) {
 		establishAllInfo(function() {
-			res.send(currentLetterDay);
+			sendData(res);
 		});
 	} else {
-		res.send(currentLetterDay);
+		sendData(res);
 	}
 });
+
+function sendData(res) {
+	renderObject = { letter_day: global.currentLetterDay };
+	var rot = [];
+	for (var i = 0; i < global.rotation.length; i++) {
+		rot.push(global.rotation[i].period);
+	}
+	renderObject.rotation = rot.join('-');
+	res.render('client.html', renderObject);
+}
 
 var server = app.listen(8080, function() {
     console.log('Letter day server listening on port %s', server.address().port);
