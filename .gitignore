@@ -1,6 +1,9 @@
 private.js
 package-lock.json
 
+#mysqlite database
+.db
+
 # Logs
 logs
 *.log
