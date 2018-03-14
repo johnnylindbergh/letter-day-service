@@ -16,8 +16,14 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.engine('html', mustacheExpress());
 app.use('/', express.static('static'));
 
-var lastUpdate;
-var currentLetterDay;
+
+redundancy.init(app);
+
+
+global.lastUpdate;
+global.currentLetterDay;
+global.rotation;
+
 
 app.get('/', function(req, res) {
 	var today = moment();

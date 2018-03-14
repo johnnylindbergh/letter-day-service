@@ -22,10 +22,13 @@
   },
   "homepage": "https://github.com/johnnylindbergh/letter-day-service#readme",
   "dependencies": {
+    "any-db": "^2.2.0",
+    "any-db-sqlite3": "^2.1.4",
     "body-parser": "^1.18.2",
     "express": "^4.16.3",
     "ical": "^0.5.0",
     "moment": "^2.21.0",
-    "mustache-express": "^1.2.5"
+    "mustache-express": "^1.2.5",
+    "request": "^2.85.0"
   }
 }

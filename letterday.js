@@ -1,5 +1,7 @@
-var moment = require('moment.js');
-var private = require('private.js');
+var moment			= require('moment');
+var private 		= require('./private.js');
+var cal 			= require('ical');
+
 
 module.exports = {
 	// make api call and update last modified date
