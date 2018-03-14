@@ -1,26 +1,65 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>What fucking letter day is it</title>
-</head>
-<body>
-	Today is {{article}} {{letter_day}} day.
-	<br>
-	{{rotation}}
-	<br>
-	{{^all_finished}}
-		{{#during}}
-			Currently {{period}}{{suffix}} period, finishing at {{finish}}
-		{{/during}}
-		{{^during}}
-			{{period}}{{suffix}} period begins at {{start_time}}
+	<head>
+		<title>What letter day is it</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+		<style>
+			body,h1, h2 {font-family: "Raleway", sans-serif}
+			body, html {height: 100%}
+			.bgimg {
+			    /*background-image: url('https://www.stab.org/uploaded/Page_Images/Posts/LV_Drone_2016.png?1506102838727');*/
+			    background-image: url('https://i.imgur.com/PWejzqB.jpg');
+			    min-height: 100%;
+			    background-position: center;
+			    background-size: cover;
+			}
+			.darken {
+				background-color: rgb(0, 0, 0, 0.5);
+				padding: 30px;
+			}
+		</style>
+	</head>
+	<body>
 
-			(in {{#hours}}{{time_until_hr}} hours and {{/hours}}{{time_until_min}} minutes) 
-		{{/during}}
-	{{/all_finished}}
+		<div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
+		  <div class="w3-display-topleft w3-padding-large w3-xlarge">
+		    what letter day is it
+		  </div>
+		  <div class="w3-display-middle darken">
+		    <h1 class="w3-jumbo w3-animate-top">
+		    	Today is {{article}} {{letter_day}} day.
+		    </h1>
+		    <h2 class="w3-jumbo w3-animate-top w3-center">
+		    	{{rotation}}
+		    </h2>
 
-	{{#all_finished}}
-		All classes have finished for today.
-	{{/all_finished}}
-</body>
+		    <hr class="w3-border-grey" style="margin:auto;width:40%">
+		    <p class="w3-large w3-center">
+
+		    	{{^all_finished}}
+					{{#during}}
+						Currently {{period}}{{suffix}} period, finishing at {{finish}}
+					{{/during}}
+					{{^during}}
+						{{period}}{{suffix}} period begins at {{start_time}}
+
+						(in {{#hours}}{{time_until_hr}} hours and {{/hours}}{{time_until_min}} minutes) 
+					{{/during}}
+				{{/all_finished}}
+
+				{{#all_finished}}
+					All classes have finished for today.
+				{{/all_finished}}
+
+		    </p>
+		  </div>
+		  <div class="w3-display-bottomleft w3-padding-large">
+		    CSS by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a>
+		  </div>
+		</div>
+
+	</body>
 </html>

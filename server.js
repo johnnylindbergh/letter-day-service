@@ -80,7 +80,7 @@ function prepGlobalRenderObject() {
 	for (var i = 0; i < global.rotation.length; i++) {
 		rot.push(global.rotation[i].period);
 	}
-	global.renderObject.rotation = rot.join('-');
+	global.renderObject.rotation = rot.join(' - ');
 	global.renderObject.article = ['A', 'E', 'F'].indexOf(global.currentLetterDay) == -1 ? "a" : "an";
 }
 
