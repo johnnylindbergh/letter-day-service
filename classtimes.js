@@ -31,7 +31,15 @@ module.exports = {
 
 	// get info about current time relative to period schedule (rotation data MUST exist)
 	getCurrentPeriodInfo: function() {
-		var currentTime = moment();
+		// var currentTime = moment();
+		// DEBUG
+		var currentTime = moment('2018-03-13T10:55:45.307');
+
+
+
+
+
+
 		var info = {};
 		for (var i = 0; i < global.rotation.length; i++) {
 			var period = global.rotation[i];

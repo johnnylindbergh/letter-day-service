@@ -4,8 +4,15 @@
 	<title>What fucking letter day is it</title>
 </head>
 <body>
-	Today is {{letter_day}} day.
+	Today is {{article}} {{letter_day}} day.
 	<br>
 	{{rotation}}
+	<br>
+	{{#during}}
+		It is currently {{period}}{{suffix}} period.
+	{{/during}}
+	{{^during}}
+		{{period}}{{suffix}} begins in 
+	{{/during}}
 </body>
 </html>

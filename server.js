@@ -16,6 +16,15 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.engine('html', mustacheExpress());
 app.use('/', express.static('views'));
 
+var suffixes = {
+	'1': 'st',
+	'2': 'nd',
+	'3': 'rd',
+	'4': 'th',
+	'5': 'th', 
+	'6': 'th'
+}
+
 // get homepage
 app.get('/', function(req, res) {
 	var today = moment();
@@ -29,6 +38,7 @@ app.get('/', function(req, res) {
 	}
 });
 
+// format period data and render response
 function sendData(res) {
 	renderObject = { letter_day: global.currentLetterDay };
 	var rot = [];
@@ -36,6 +46,13 @@ function sendData(res) {
 		rot.push(global.rotation[i].period);
 	}
 	renderObject.rotation = rot.join('-');
+	renderObject.article = ['A', 'E', 'F'].indexOf(global.currentLetterDay) == -1 ? "a" : "an";
+
+	var info = classTimes.getCurrentPeriodInfo();
+	renderObject.during = info.during;
+	renderObject.period = info.period;
+	renderObject.suffix = suffixes[info.period];
+
 	res.render('client.html', renderObject);
 }
 
