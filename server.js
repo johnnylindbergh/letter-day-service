@@ -80,9 +80,9 @@ var server = app.listen(8080, function() {
 
 function establishAllInfo(callback) {
 	// record that update has been made and reset all info
-	global.lastUpdate = moment();
-	global.currentLetterDay = undefined;
-	global.rotation = [];
+	global.lastUpdate = moment();			// time of last update
+	global.currentLetterDay = undefined;	// current letter for today
+	global.rotation = [];					// all periods that occur today and their start and end times
 
 	letterDay.updateLetterDay(function() {
 		classTimes.getTodaysSchedule(function() {
