@@ -40,18 +40,15 @@ app.get('/', function(req, res) {
 
 // format period data and render response
 function sendData(res) {
-	renderObject = { letter_day: global.currentLetterDay };
-	var rot = [];
-	for (var i = 0; i < global.rotation.length; i++) {
-		rot.push(global.rotation[i].period);
-	}
-	renderObject.rotation = rot.join('-');
-	renderObject.article = ['A', 'E', 'F'].indexOf(global.currentLetterDay) == -1 ? "a" : "an";
 
-	var info = classTimes.getCurrentPeriodInfo();
-	renderObject.during = info.during;
-	renderObject.period = info.period;
-	renderObject.suffix = suffixes[info.period];
+	// get info for current time
+	var info = classTimes.getCurrentPeriodInfo(moment());
+
+	var renderObject = Object.assign({
+		during: info.during,
+		period: info.period,
+		suffix: suffixes[info.period]
+	}, global.renderObject);
 
 	// currently in period
 	if (info.during) {
@@ -61,7 +58,14 @@ function sendData(res) {
 		if (info.all_finished) {
 			renderObject.all_finished = true;
 		} else {
-			renderObject.time_until = info.time_until;
+			var split = info.time_until.split(':');
+			if (split[0] != '0') {
+				renderObject.hours = true;
+				renderObject.time_until_hr = split[0];
+			} else {
+				renderObject.hours = false;
+			}
+			renderObject.time_until_min = split[1];
 			renderObject.start_time = info.start.format('h:mm A');
 		}
 	}
@@ -69,12 +73,22 @@ function sendData(res) {
 	res.render('client.html', renderObject);
 }
 
+// init a template render object (no time-specific data)
+function prepGlobalRenderObject() {
+	global.renderObject = { letter_day: global.currentLetterDay };
+	var rot = [];
+	for (var i = 0; i < global.rotation.length; i++) {
+		rot.push(global.rotation[i].period);
+	}
+	global.renderObject.rotation = rot.join('-');
+	global.renderObject.article = ['A', 'E', 'F'].indexOf(global.currentLetterDay) == -1 ? "a" : "an";
+}
+
 var server = app.listen(8080, function() {
     console.log('Letter day server listening on port %s', server.address().port);
 
     establishAllInfo(function() {
     	console.log("Finished initial establishment on server start.");
-    	console.log(classTimes.getCurrentPeriodInfo());
     });
 });
 
@@ -86,6 +100,7 @@ function establishAllInfo(callback) {
 
 	letterDay.updateLetterDay(function() {
 		classTimes.getTodaysSchedule(function() {
+			prepGlobalRenderObject();
 			callback();
 		});
 	});

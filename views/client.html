@@ -13,7 +13,9 @@
 			Currently {{period}}{{suffix}} period, finishing at {{finish}}
 		{{/during}}
 		{{^during}}
-			{{period}}{{suffix}} period begins at {{start_time}} ({{time_until}} from now)
+			{{period}}{{suffix}} period begins at {{start_time}}
+
+			(in {{#hours}}{{time_until_hr}} hours and {{/hours}}{{time_until_min}} minutes) 
 		{{/during}}
 	{{/all_finished}}
 
