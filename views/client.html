@@ -8,11 +8,17 @@
 	<br>
 	{{rotation}}
 	<br>
-	{{#during}}
-		It is currently {{period}}{{suffix}} period.
-	{{/during}}
-	{{^during}}
-		{{period}}{{suffix}} begins in 
-	{{/during}}
+	{{^all_finished}}
+		{{#during}}
+			Currently {{period}}{{suffix}} period, finishing at {{finish}}
+		{{/during}}
+		{{^during}}
+			{{period}}{{suffix}} period begins at {{start_time}} ({{time_until}} from now)
+		{{/during}}
+	{{/all_finished}}
+
+	{{#all_finished}}
+		All classes have finished for today.
+	{{/all_finished}}
 </body>
 </html>

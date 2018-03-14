@@ -53,6 +53,19 @@ function sendData(res) {
 	renderObject.period = info.period;
 	renderObject.suffix = suffixes[info.period];
 
+	// currently in period
+	if (info.during) {
+		renderObject.finish = info.end.format('h:mm A');
+	} else {
+		// if all periods finished
+		if (info.all_finished) {
+			renderObject.all_finished = true;
+		} else {
+			renderObject.time_until = info.time_until;
+			renderObject.start_time = info.start.format('h:mm A');
+		}
+	}
+
 	res.render('client.html', renderObject);
 }
 

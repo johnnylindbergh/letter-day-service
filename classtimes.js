@@ -31,16 +31,9 @@ module.exports = {
 
 	// get info about current time relative to period schedule (rotation data MUST exist)
 	getCurrentPeriodInfo: function() {
-		// var currentTime = moment();
-		// DEBUG
-		var currentTime = moment('2018-03-13T10:55:45.307');
-
-
-
-
-
-
+		var currentTime = moment();
 		var info = {};
+		
 		for (var i = 0; i < global.rotation.length; i++) {
 			var period = global.rotation[i];
 			if (currentTime.isBetween(period.start, period.end) || currentTime.isSame(period.start) || currentTime.isSame(period.end)) {
@@ -49,7 +42,7 @@ module.exports = {
 			} else if (currentTime.isBefore(period.start)) {
 				// calculate time until next period
 				var difference = moment.utc(period.start.diff(currentTime)).format("HH:mm:ss");
-				return {during: false, time_until: difference, period: period.period};
+				return Object.assign({during: false, time_until: difference, period: period.period}, period);
 			}
 		}
 
