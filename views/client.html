@@ -17,10 +17,11 @@
 			    background-size: cover;
 			}
 			.darken {
-				background-color: rgb(0, 0, 0, 0.6);
+				background-color: rgba(0, 0, 0, 0.6);
 				padding: 30px;
 				padding-left: 50px;
 				padding-right: 50px;
+				width: 100%;
 			}
 		</style>
 	</head>
@@ -31,30 +32,40 @@
 		    what letter day is it
 		  </div>
 		  <div class="w3-display-middle darken">
+		  	<center>
 		    <h1 class="w3-jumbo w3-animate-top">
-		    	Today is {{article}} {{letter_day}} day.
+		    	{{#letter_info}}
+		    		Today is {{article}} {{letter_day}} day.
+		    	{{/letter_info}}
+		    	{{^letter_info}}
+		    		{{no_info_message}}
+		    	{{/letter_info}}
 		    </h1>
+			</center>
 		    <h2 class="w3-jumbo w3-animate-top w3-center">
 		    	{{rotation}}
 		    </h2>
 
 		    <hr class="w3-border-grey" style="margin:auto;width:40%">
 		    <p class="w3-large w3-center">
+		    	{{#letter_info}}
 
-		    	{{^all_finished}}
-					{{#during}}
-						Currently {{period}}{{suffix}} period, finishing at {{finish}}
-					{{/during}}
-					{{^during}}
-						{{period}}{{suffix}} period begins at {{start_time}}
+			    	{{^all_finished}}
+						{{#during}}
+							Currently {{period}}{{suffix}} period, finishing at {{finish}}
+						{{/during}}
+						{{^during}}
+							{{period}}{{suffix}} period begins at {{start_time}}
 
-						(in {{#hours}}{{time_until_hr}} hours and {{/hours}}{{time_until_min}} minutes) 
-					{{/during}}
-				{{/all_finished}}
+							(in {{#hours}}{{time_until_hr}} hours and {{/hours}}{{time_until_min}} minutes) 
+						{{/during}}
+					{{/all_finished}}
 
-				{{#all_finished}}
-					All classes have finished for today.
-				{{/all_finished}}
+					{{#all_finished}}
+						All classes have finished for today.
+					{{/all_finished}}
+
+				{{/letter_info}}
 
 		    </p>
 		  </div>

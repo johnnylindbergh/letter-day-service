@@ -25,6 +25,13 @@ var suffixes = {
 	'6': 'th'
 }
 
+var messages = [
+	"Today isn't a letter day you fish.",
+	"No information found.",
+	"Not today.",
+	"Come back on an actual letter day."
+];
+
 // get homepage
 app.get('/', function(req, res) {
 	var today = moment();
@@ -40,34 +47,40 @@ app.get('/', function(req, res) {
 
 // format period data and render response
 function sendData(res) {
+	var renderObject = {};
+	// if letter day info exists
+	if (global.currentLetterDay) {
+		// get info for current time
+		var info = classTimes.getCurrentPeriodInfo(moment());
 
-	// get info for current time
-	var info = classTimes.getCurrentPeriodInfo(moment());
+		renderObject = Object.assign({
+			during: info.during,
+			period: info.period,
+			suffix: suffixes[info.period],
+			letter_info: true
+		}, global.renderObject);
 
-	var renderObject = Object.assign({
-		during: info.during,
-		period: info.period,
-		suffix: suffixes[info.period]
-	}, global.renderObject);
-
-	// currently in period
-	if (info.during) {
-		renderObject.finish = info.end.format('h:mm A');
-	} else {
-		// if all periods finished
-		if (info.all_finished) {
-			renderObject.all_finished = true;
+		// currently in period
+		if (info.during) {
+			renderObject.finish = info.end.format('h:mm A');
 		} else {
-			var split = info.time_until.split(':');
-			if (split[0] != '0') {
-				renderObject.hours = true;
-				renderObject.time_until_hr = split[0];
+			// if all periods finished
+			if (info.all_finished) {
+				renderObject.all_finished = true;
 			} else {
-				renderObject.hours = false;
+				var split = info.time_until.split(':');
+				if (split[0] != '0') {
+					renderObject.hours = true;
+					renderObject.time_until_hr = split[0];
+				} else {
+					renderObject.hours = false;
+				}
+				renderObject.time_until_min = split[1];
+				renderObject.start_time = info.start.format('h:mm A');
 			}
-			renderObject.time_until_min = split[1];
-			renderObject.start_time = info.start.format('h:mm A');
 		}
+	} else {
+		renderObject.no_info_message = messages[Math.floor(Math.random() * messages.length)];
 	}
 
 	res.render('client.html', renderObject);
