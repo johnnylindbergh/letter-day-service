@@ -17,10 +17,16 @@ module.exports = {
 					var end = moment(ev.end);
 
 					// if class occurs today and is not advisory
-					if (start.isSame(global.lastUpdate, 'day') && !ev.summary.match('Advisory')) {
+					if (start.isSame(global.lastUpdate, 'day') && ev.description.match(/Block:\sUS:\d/g)) {
 						global.rotation[index].start = start;
 						global.rotation[index].end = end;
 						index++;
+						
+						console.log(ev);
+
+						if (index > 2) {
+							break;
+						}
 					}
 				}
 			}
@@ -34,7 +40,7 @@ module.exports = {
 		var info = {};
 		
 		for (var i = 0; i < global.rotation.length; i++) {
-			var period = global.rotation[i];
+			var period = global.rotation[i];;
 			if (currentTime.isBetween(period.start, period.end) || currentTime.isSame(period.start) || currentTime.isSame(period.end)) {
 				// return that period is in session / period data
 				return Object.assign({during: true}, period);

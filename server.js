@@ -97,7 +97,7 @@ function prepGlobalRenderObject() {
 	global.renderObject.article = ['A', 'E', 'F'].indexOf(global.currentLetterDay) == -1 ? "a" : "an";
 }
 
-var server = app.listen(8080, function() {
+var server = app.listen(80, function() {
     console.log('Letter day server listening on port %s', server.address().port);
 
     establishAllInfo(function() {
