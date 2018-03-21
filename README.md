@@ -1,4 +1,4 @@
 # letter-day-service
 It does what it does.
 
-whatletterdayisit.today
+<a href="http://whatletterdayisit.today" target="_blank">whatletterdayisit.today</a>
