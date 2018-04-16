@@ -27,7 +27,7 @@ var suffixes = {
 
 var messages = [
 	"Today isn't a letter day you fish.",
-	"No information found.",
+	"No information for today.",
 	"Not today.",
 	"Come back on an actual letter day."
 ];
@@ -80,14 +80,16 @@ function sendData(res) {
 			}
 		}
 	} else {
-		renderObject.no_info_message = messages[Math.floor(Math.random() * messages.length)];
+		renderObject = Object.assign({
+			no_info_message: messages[Math.floor(Math.random() * messages.length)]
+		}, global.renderObject);
 	}
 
 	res.render('client.html', renderObject);
 }
 
 // init a template render object (no time-specific data)
-function prepGlobalRenderObject() {
+function prepGlobalRenderObject(callback) {
 	global.renderObject = { letter_day: global.currentLetterDay };
 	var rot = [];
 	for (var i = 0; i < global.rotation.length; i++) {
@@ -95,9 +97,23 @@ function prepGlobalRenderObject() {
 	}
 	global.renderObject.rotation = rot.join(' - ');
 	global.renderObject.article = ['A', 'E', 'F'].indexOf(global.currentLetterDay) == -1 ? "a" : "an";
+
+	if (global.currentLetterDay == undefined) {
+		letterDay.getNextLetterDay(function(result) {
+			if (result.next_letter) {
+				global.renderObject.next_day_info = true;
+				global.renderObject.next_day = result.next_day;
+				global.renderObject.next_letter = result.next_letter;
+				global.renderObject.next_rot = result.next_rot;
+				global.renderObject.next_art = ['A', 'E', 'F'].indexOf(result.next_letter) == -1 ? "a" : "an";
+			}
+			callback();
+		});
+
+	}
 }
 
-var server = app.listen(80, function() {
+var server = app.listen(8080, function() {
     console.log('Letter day server listening on port %s', server.address().port);
 
     establishAllInfo(function() {
@@ -113,8 +129,9 @@ function establishAllInfo(callback) {
 
 	letterDay.updateLetterDay(function() {
 		classTimes.getTodaysSchedule(function() {
-			prepGlobalRenderObject();
-			callback();
+			prepGlobalRenderObject(function() {
+				callback();
+			});
 		});
 	});
 }

@@ -21,8 +21,6 @@ module.exports = {
 						global.rotation[index].start = start;
 						global.rotation[index].end = end;
 						index++;
-						
-						console.log(ev);
 
 						if (index > 2) {
 							break;
