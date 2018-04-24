@@ -67,6 +67,7 @@ function sendData(res) {
 			// if all periods finished
 			if (info.all_finished) {
 				renderObject.all_finished = true;
+				renderObject.next_day_info = true;
 			} else {
 				var split = info.time_until.split(':');
 				if (split[0] != '0') {
@@ -81,7 +82,8 @@ function sendData(res) {
 		}
 	} else {
 		renderObject = Object.assign({
-			no_info_message: messages[Math.floor(Math.random() * messages.length)]
+			no_info_message: messages[Math.floor(Math.random() * messages.length)],
+			next_day_info: true
 		}, global.renderObject);
 	}
 
@@ -98,19 +100,17 @@ function prepGlobalRenderObject(callback) {
 	global.renderObject.rotation = rot.join(' - ');
 	global.renderObject.article = ['A', 'E', 'F'].indexOf(global.currentLetterDay) == -1 ? "a" : "an";
 
-	if (global.currentLetterDay == undefined) {
-		letterDay.getNextLetterDay(function(result) {
-			if (result.next_letter) {
-				global.renderObject.next_day_info = true;
-				global.renderObject.next_day = result.next_day;
-				global.renderObject.next_letter = result.next_letter;
-				global.renderObject.next_rot = result.next_rot;
-				global.renderObject.next_art = ['A', 'E', 'F'].indexOf(result.next_letter) == -1 ? "a" : "an";
-			}
-			callback();
-		});
-
-	}
+	// establish NEXT letter day for later use
+	letterDay.getNextLetterDay(function(result) {
+		if (result.next_letter) {
+			// global.renderObject.next_day_info = true;
+			global.renderObject.next_day = result.next_day;
+			global.renderObject.next_letter = result.next_letter;
+			global.renderObject.next_rot = result.next_rot;
+			global.renderObject.next_art = ['A', 'E', 'F'].indexOf(result.next_letter) == -1 ? "a" : "an";
+		}
+		callback();
+	});
 }
 
 var server = app.listen(8080, function() {
